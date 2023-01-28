@@ -9,7 +9,7 @@ fn main() {
 
     let sdl_dir = root.join("SDL2");
     let _ = Repository::clone("https://github.com/libsdl-org/SDL", &sdl_dir);
-    let _ = process::Command::new("./configure")
+    let _ = process::Command::new(sdl_dir.join("configure"))
         .arg(format!("--prefix={}", root_dir))
         .current_dir(&sdl_dir)
         .output()
@@ -27,7 +27,7 @@ fn main() {
 
     let sdl_image_dir = root.join("SDL2_image");
     let _ = Repository::clone("https://github.com/libsdl-org/SDL_image", &sdl_image_dir);
-    let _ = process::Command::new("./configure")
+    let _ = process::Command::new(sdl_image_dir.join("configure"))
         .arg(format!("--prefix={}", root_dir))
         .current_dir(&sdl_image_dir)
         .env("SDL2_DIR", &sdl_dir)
