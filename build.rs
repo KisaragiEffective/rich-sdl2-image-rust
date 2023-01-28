@@ -9,13 +9,18 @@ fn main() {
 
     let sdl_dir = root.join("SDL2");
     let _ = Repository::clone("https://github.com/libsdl-org/SDL", &sdl_dir);
+    let _ = process::Command::new("git")
+        .args(["checkout", "release-2.26.2"])
+        .current_dir(&sdl_dir)
+        .output()
+        .expect("failed to checkout fixed tag");
     let _ = process::Command::new("./configure")
         .arg(format!("--prefix={}", root_dir))
         .current_dir(&sdl_dir)
         .output()
         .expect("failed to configure");
     let _ = process::Command::new("make")
-        .arg("-j4")
+        .arg("-j")
         .current_dir(&sdl_dir)
         .output()
         .expect("failed to make");
@@ -27,6 +32,11 @@ fn main() {
 
     let sdl_image_dir = root.join("SDL2_image");
     let _ = Repository::clone("https://github.com/libsdl-org/SDL_image", &sdl_image_dir);
+    let _ = process::Command::new("git")
+        .args(["checkout", "release-2.6.2"])
+        .current_dir(&sdl_image_dir)
+        .output()
+        .expect("failed to checkout fixed tag");
     let _ = process::Command::new("./configure")
         .arg(format!("--prefix={}", root_dir))
         .current_dir(&sdl_image_dir)
@@ -34,7 +44,7 @@ fn main() {
         .output()
         .expect("failed to configure");
     let _ = process::Command::new("make")
-        .arg("-j4")
+        .arg("-j")
         .current_dir(&sdl_image_dir)
         .output()
         .expect("failed to make");
